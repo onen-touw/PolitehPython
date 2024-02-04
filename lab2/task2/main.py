@@ -34,19 +34,22 @@ class Book:
 # TODO написать класс Library
 class Library:
 
-    def __init__(self, books=[]):
+    def __init__(self, books: list[Book] = None):
         self.books = books
 
     def get_next_book_id(self):
-        return len(self.books) + 1
+        if not self.books:
+            return 1
+        return self.books[-1].id + 1
+        # return len(self.books) + 1
 
-    def get_index_by_book_id(self, id_):
-        if id_ < 1 or id_ > len(self.books):
+    def get_index_by_book_id(self, id_) -> int:
+        if id_ < 1 or id_ > len(self.books) or len(self.books) == 0:
             raise ValueError("Книги с запрашиваемым id не существует")
 
-        for book in self.books:
+        for index, book in enumerate(self.books):
             if book.GetId() == id_:
-                return self.books.index(book)
+                return index
 
 
 if __name__ == '__main__':
